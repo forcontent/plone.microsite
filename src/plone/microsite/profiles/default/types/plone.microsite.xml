@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<object
+    name="plone.microsite"
+    meta_type="Dexterity FTI"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone.microsite">
+
+  <!-- Basic metadata -->
+  <property name="title" i18n:translate="">Microsite</property>
+  <property name="description" i18n:translate="">A microsite.</property>
+  <property name="allow_discussion">False</property>
+  <property name="factory">plone.microsite</property>
+  <property name="icon_expr">string:$portal_url/++resource++plone.microsite/microsite.png</property>
+  <property name="link_target"></property>
+
+  <!-- Hierarchy control -->
+  <property name="allowed_content_types" />
+  <property name="filter_content_types">False</property>
+  <property name="global_allow">True</property>
+
+  <!-- Schema, class and security for content items -->
+  <property name="add_permission">plone.microsite.AddMicrosite</property>
+  <property name="klass">plone.microsite.content.Microsite</property>
+  <property name="schema">plone.microsite.interfaces.IMicrosite</property>
+  <property name="model_source" />
+  <property name="model_file" />
+
+  <!-- Enabled behaviors -->
+  <property name="behaviors" purge="false">
+    <element value="plone.dublincore" />
+    <element value="plone.namefromtitle" />
+    <element value="plone.excludefromnavigation" />
+    <element value="plone.shortname" />
+    <element value="plone.constraintypes" />
+    <element value="plone.navigationroot" />
+    <element value="plone.nextprevioustoggle" />
+    <element value="plone.microsite.metadata" />
+    <element value="collective.behavior.localdiazo.behavior.ILocalDiazo" />
+    <element value="collective.behavior.localregistry.behavior.ILocalRegistry" />
+  </property>
+
+  <!-- View information -->
+  <property name="default_view">listing_view</property>
+  <property name="default_view_fallback">False</property>
+  <property name="immediate_view">view</property>
+  <property name="view_methods">
+    <element value="album_view"/>
+    <element value="full_view"/>
+    <element value="listing_view"/>
+    <element value="sumary_view"/>
+    <element value="tabular_view"/>
+  </property>
+
+  <!-- Method aliases -->
+  <alias from="(Default)" to="(dynamic view)" />
+  <alias from="view" to="(selected layout)" />
+  <alias from="edit" to="@@edit" />
+  <alias from="sharing" to="@@sharing" />
+
+  <!-- Actions -->
+  <action title="View" action_id="view" category="object" condition_expr=""
+      url_expr="string:${object_url}/" icon_expr="string:toolbar-action/view"
+      i18n:attributes="title" visible="True">
+    <permission value="View" />
+  </action>
+  <action title="Edit" action_id="edit" category="object" condition_expr=""
+      url_expr="string:${object_url}/edit" con_expr="string:toolbar-action/edit"
+      i18n:attributes="title" visible="True">
+    <permission value="Modify portal content" />
+  </action>
+</object>

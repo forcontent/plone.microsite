@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+    <subscriber
+        for="plone.microsite.interfaces.IMicrosite
+             zope.lifecycleevent.IObjectCreatedEvent"
+        handler="plone.microsite.subscribers.microsite.change_add_permission"
+        />
+
+    <subscriber
+        for="..behaviors.IMicrositeLocalRegistry
+             zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+        handler=".microsite.set_metadata"
+        />
+
+</configure>

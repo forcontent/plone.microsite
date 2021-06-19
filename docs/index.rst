@@ -1,0 +1,5 @@
+===============
+plone.microsite
+===============
+
+User documentation

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<rolemap>
+    <permissions>
+        <permission name="plone.microsite: Setup" acquire="False">
+          <role name="Manager"/>
+          <role name="Site Administrator"/>
+        </permission>
+
+        <permission name="plone.microsite: Add Microsite" acquire="True">
+          <role name="Manager"/>
+          <role name="Site Administrator"/>
+          <role name="Owner"/>
+          <role name="Contributor"/>
+        </permission>
+
+    </permissions>
+</rolemap>

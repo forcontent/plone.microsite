@@ -1,0 +1,35 @@
+<a id="portal-logo"
+   title="Home"
+   accesskey="1"
+   tal:attributes="href view/portal_root_url;
+                   title view/navigation_root_title"
+   i18n:domain="plone"
+   i18n:attributes="title">
+    <img src="logo.jpg" alt=""
+         tal:attributes="title view/logo_title;
+                         alt view/logo_title;
+         				         src view/img_src" /></a>
+
+<a id="microsite-logo"
+   title="Microsite"
+   accesskey="1"
+   tal:condition="python: view.isMicrosite and view.hasMicrositeLogo"
+   tal:attributes="href view/navigation_root_url;
+                   title view/microsite_title"
+   i18n:domain="plone"
+   i18n:attributes="title">
+    <img src="logo.jpg" alt=""
+         tal:attributes="title view/microsite_title;
+                         alt view/microsite_title;
+         				         src view/microsite_logo" /></a>
+
+<div id="microsite-title">
+  <span class="demo-icon icon-menu"> </span>
+	<a tal:condition="view/isMicrosite" tal:attributes="href view/navigation_root_url">
+    <span tal:content="view/microsite_title">Título do portal</span>
+  </a>
+
+	<a tal:condition="not: view/isMicrosite" tal:attributes="href view/navigation_root_url">
+    <span tal:content="view/logo_title">Título do portal</span>
+  </a>
+</div>

@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="plone.microsite">
+
+  <!-- Publish static files -->
+  <browser:resourceDirectory
+      name="plone.microsite"
+      directory="static"
+      />
+
+  <!-- Views -->
+  <browser:page
+      for="..behaviors.IMicrositeLocalRegistry"
+      name="microsite-metadata-setter"
+      permission="zope2.Public"
+      class=".microsite.LocalRegistrySetter"
+      />
+
+  <browser:page
+      for="*"
+      name="microsite-logo"
+      class=".microsite.MicroSiteLogo"
+      permission="zope.Public"
+      />
+
+  <!-- Viewlets -->
+  <browser:viewlet
+      name="plone.logo"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+      class=".microsite.MicrositeLogoViewlet"
+      layer="plone.microsite.interfaces.IMicrositeLayer"
+      permission="zope2.View"
+      />
+
+</configure>
