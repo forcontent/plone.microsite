@@ -80,9 +80,9 @@ class MicrositeLogoViewlet(LogoViewlet):
 
         if microsite:
             self.isMicrosite = self.helper.enabled()
-            self.microsite_title = microsite.title_or_id()
-            self.microsite_url = microsite.absolute_url()
+            self.microsite_title = self.helper.title()
+            self.microsite_url = self.helper.url()
 
             if getattr(microsite, 'microsite_logo', False):
                 self.hasMicrositeLogo = True
-                self.microsite_logo = self.helper.microsite_logo(self.microsite_url)
+                self.microsite_logo = self.helper.logo(self.microsite_url)

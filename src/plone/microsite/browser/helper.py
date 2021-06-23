@@ -17,8 +17,11 @@ class IHelperView(Interface):
     def microsite_root():
         """ Return a Microsite Object """
 
-    def microsite_logo(site_url):
+    def logo(site_url):
         """ Return a Microsite Logo Url """
+
+    def url():
+        """ Return a Microsite Url """
 
 
 @implementer(IHelperView)
@@ -41,10 +44,28 @@ class HelperView(BrowserView):
                     return item
 
     @memoize_contextless
-    def microsite_logo(self, site_url):
+    def logo(self, site_url):
         return '%s/@@microsite-logo/micrositelogo' % (site_url)
 
     @memoize
     def enabled(self):
         if self.microsite_root():
             return True
+
+    @memoize_contextless
+    def url(self):
+        microsite_type = u'plone.microsite'
+        microsite = self.microsite_root()
+
+        if microsite_type in getattr(microsite, 'portal_type', ''):
+            return microsite.absolute_url()
+        return ''
+
+    @memoize_contextless
+    def title(self):
+        microsite_type = u'plone.microsite'
+        microsite = self.microsite_root()
+
+        if microsite_type in getattr(microsite, 'portal_type', ''):
+            return microsite.title_or_id()
+        return ''
