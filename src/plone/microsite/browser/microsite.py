@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone import api
 from plone.app.layout.viewlets.common import LogoViewlet
 from plone.formwidget.namedfile.converter import b64encode_file
 from plone.namedfile.browser import Download
@@ -10,6 +9,7 @@ from plone.registry import Record
 from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
+from zope.component import getMultiAdapter
 
 
 class LocalRegistrySetter(BrowserView):
@@ -64,34 +64,25 @@ class MicrositeLogoViewlet(LogoViewlet):
     """ Override Plone logo viewlet """
     index = ViewPageTemplateFile("templates/logo.pt")
 
+    def __init__(self, context, request, view, manager):
+        super(MicrositeLogoViewlet, self).__init__(context, request, view, manager)
+        self.context = context
+        self.request = request
+        self.view = view
+        self.helper = getMultiAdapter((self.context, self.request),
+                                      name=u'microsite_helper')
+
     def update(self):
         super(MicrositeLogoViewlet, self).update()
+        microsite = self.helper.microsite_root()
         self.isMicrosite = False
         self.hasMicrositeLogo = False
 
-        microsite = self.get_microsite_root
-        self.portal_root_url = api.portal.get().absolute_url()
-
         if microsite:
-            self.isMicrosite = True
+            self.isMicrosite = self.helper.enabled()
             self.microsite_title = microsite.title_or_id()
             self.microsite_url = microsite.absolute_url()
 
             if getattr(microsite, 'microsite_logo', False):
                 self.hasMicrositeLogo = True
-                self.microsite_logo = self.get_microsite_logo(self.microsite_url)
-
-    @property
-    def get_microsite_root(self):
-        microsite_type = u'plone.microsite'
-        context = self.context
-
-        if microsite_type in context.portal_type:
-            return context
-        else:
-            for item in context.aq_chain:
-                if microsite_type in getattr(item, 'portal_type', ''):
-                    return item
-
-    def get_microsite_logo(self, site_url):
-        return '%s/@@microsite-logo/micrositelogo' % (site_url)
+                self.microsite_logo = self.helper.microsite_logo(self.microsite_url)

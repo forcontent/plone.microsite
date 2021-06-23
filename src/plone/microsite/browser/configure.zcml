@@ -24,6 +24,15 @@
       permission="zope.Public"
       />
 
+    <browser:page
+        for="*"
+        name="microsite_helper"
+        class=".helper.HelperView"
+        allowed_interface=".helper.IHelperView"
+        layer="plone.microsite.interfaces.IMicrositeLayer"
+        permission="zope2.View"
+        />
+
   <!-- Viewlets -->
   <browser:viewlet
       name="microsite.logo"
