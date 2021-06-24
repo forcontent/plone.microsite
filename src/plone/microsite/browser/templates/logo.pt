@@ -11,8 +11,8 @@
                          alt view/microsite_title;
          				         src view/microsite_logo" /></a>
 
-<div id="microsite-title">
-	<a tal:condition="view/isMicrosite" tal:attributes="href view/navigation_root_url">
+<div id="microsite-title" tal:condition="view/isMicrosite">
+	<a tal:attributes="href view/navigation_root_url">
     <span tal:content="view/microsite_title">Título do portal</span>
   </a>
 </div>
